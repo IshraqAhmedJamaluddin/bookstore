@@ -12,8 +12,23 @@ namespace file_organization_project
 {
     public partial class Search : Form
     {
+        private string file;
+        private Form main;
         public Search()
         {
+            InitializeComponent();
+        }
+        public Search(string filename, Form main)
+        {
+            try
+            {
+                file = filename;
+                this.main = main;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             InitializeComponent();
         }
     }

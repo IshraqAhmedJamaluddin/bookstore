@@ -12,8 +12,23 @@ namespace file_organization_project
 {
     public partial class Modify : Form
     {
+        private string file;
+        private Form main;
         public Modify()
         {
+            InitializeComponent();
+        }
+        public Modify(string filename, Form main)
+        {
+            try
+            {
+                file = filename;
+                this.main = main;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             InitializeComponent();
         }
     }

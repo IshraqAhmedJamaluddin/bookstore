@@ -32,6 +32,7 @@ namespace file_organization_project
             this.label1 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.TextBox();
             this.get = new System.Windows.Forms.Button();
+            this.back = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -54,17 +55,29 @@ namespace file_organization_project
             // 
             this.get.Location = new System.Drawing.Point(54, 93);
             this.get.Name = "get";
-            this.get.Size = new System.Drawing.Size(189, 30);
+            this.get.Size = new System.Drawing.Size(73, 30);
             this.get.TabIndex = 2;
             this.get.Text = "Get";
             this.get.UseVisualStyleBackColor = true;
             this.get.Click += new System.EventHandler(this.get_Click);
+            // 
+            // back
+            // 
+            this.back.Location = new System.Drawing.Point(177, 93);
+            this.back.Name = "back";
+            this.back.Size = new System.Drawing.Size(73, 30);
+            this.back.TabIndex = 2;
+            this.back.Text = "Back";
+            this.back.UseVisualStyleBackColor = true;
+            this.back.Click += new System.EventHandler(this.back_Click);
             // 
             // GetID
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 168);
+            this.ControlBox = false;
+            this.Controls.Add(this.back);
             this.Controls.Add(this.get);
             this.Controls.Add(this.id);
             this.Controls.Add(this.label1);
@@ -80,5 +93,6 @@ namespace file_organization_project
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox id;
         private System.Windows.Forms.Button get;
+        private System.Windows.Forms.Button back;
     }
 }

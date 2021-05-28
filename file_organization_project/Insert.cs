@@ -22,8 +22,15 @@ namespace file_organization_project
         }
         public Insert(string filename, Form main)
         {
-            file = filename;
-            this.main = main;
+            try
+            {
+                file = filename;
+                this.main = main;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
             InitializeComponent();
         }
 

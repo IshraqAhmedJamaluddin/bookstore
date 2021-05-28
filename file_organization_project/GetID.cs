@@ -21,9 +21,16 @@ namespace file_organization_project
 
         public GetID(string target, string filename, Form main)
         {
-            change = target;
-            file = filename;
-            this.main = main;
+            try
+            {
+                change = target;
+                file = filename;
+                this.main = main;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             InitializeComponent();
         }
 
@@ -31,12 +38,18 @@ namespace file_organization_project
         {
             if (change == "modify")
             {
-                new Modify().Show();
+                new Modify(file, main).Show();
             }
             else // search
             {
-                new Search().Show();
+                new Search(file, main).Show();
             }
+            Close();
+        }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+            main.Show();
             Close();
         }
     }
