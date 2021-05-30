@@ -38,11 +38,11 @@ namespace file_organization_project
         {
             if (change == "modify")
             {
-                new Modify(file, main).Show();
+                new Modify(file, main, Int32.Parse(id.Text)).Show();
             }
             else // search
             {
-                new Search(file, main).Show();
+                new Search(file, main, Int32.Parse(id.Text)).Show();
             }
             Close();
         }

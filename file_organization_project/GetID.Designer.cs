@@ -66,7 +66,7 @@ namespace file_organization_project
             this.back.Location = new System.Drawing.Point(177, 93);
             this.back.Name = "back";
             this.back.Size = new System.Drawing.Size(73, 30);
-            this.back.TabIndex = 2;
+            this.back.TabIndex = 3;
             this.back.Text = "Back";
             this.back.UseVisualStyleBackColor = true;
             this.back.Click += new System.EventHandler(this.back_Click);
