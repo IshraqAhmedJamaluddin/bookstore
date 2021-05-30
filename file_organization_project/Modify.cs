@@ -46,36 +46,24 @@ namespace file_organization_project
             try
             {
                 int length = (int)br.BaseStream.Length;
-                if (length == 0)
+                while (!((count / rec_size) >= (length / rec_size)))
                 {
-                    MessageBox.Show("Empty File");
-                }
-                else
-                {
-                    while (!((count / rec_size) >= (length / rec_size - 1)))
+                    br.BaseStream.Seek(count, SeekOrigin.Begin);
+                    int currentId = br.ReadInt32();
+                    if (currentId == key)
                     {
-                        br.BaseStream.Seek(count, SeekOrigin.Begin);
-                        int currentId = br.ReadInt32();
-                        if (currentId == key)
-                        {
-                            id.Text = currentId.ToString();
-                            name.Text = br.ReadString();
-                            author.Text = br.ReadString();
-                            description.Text = br.ReadString();
-                            year.Text = br.ReadInt32().ToString();
-                            edition.Text = br.ReadString();
-                            rate.Text = br.ReadSingle().ToString();
-                            isFound = true;
-                            toChange = count;
-                            break;
-                        }
+                        id.Text = currentId.ToString();
+                        name.Text = br.ReadString();
+                        author.Text = br.ReadString();
+                        description.Text = br.ReadString();
+                        year.Text = br.ReadInt32().ToString();
+                        edition.Text = br.ReadString();
+                        rate.Text = br.ReadSingle().ToString();
+                        toChange = count;
+                        break;
+                    }
 
-                        count += rec_size;
-                    }
-                    if (!isFound)
-                    {
-                        MessageBox.Show("ID not found!");
-                    }
+                    count += rec_size;
                 }
             }
             catch (Exception exception)
@@ -90,27 +78,20 @@ namespace file_organization_project
             BinaryWriter bw = new BinaryWriter(File.Open(file, FileMode.Open, FileAccess.Write));
             try
             {
-                if (toChange == -1)
-                {
-                    MessageBox.Show("Coulnd't find ID!");
-                }
-                else
-                {
-                    bw.BaseStream.Seek(toChange, SeekOrigin.Begin);
+                bw.BaseStream.Seek(toChange, SeekOrigin.Begin);
 
-                    bw.Write(int.Parse(id.Text));
-                    name.Text = name.Text.PadRight(11);
-                    bw.Write(name.Text.Substring(0, 11));
-                    author.Text = author.Text.PadRight(9);
-                    bw.Write(author.Text.Substring(0, 9));
-                    description.Text = description.Text.PadRight(19);
-                    bw.Write(description.Text.Substring(0, 19));
-                    bw.Write(int.Parse(year.Text));
-                    edition.Text = edition.Text.PadRight(5);
-                    bw.Write(edition.Text.Substring(0, 5));
-                    bw.Write(float.Parse(rate.Text));
-                    MessageBox.Show("Saved Successfully");
-                }
+                bw.Write(int.Parse(id.Text));
+                name.Text = name.Text.PadRight(11);
+                bw.Write(name.Text.Substring(0, 11));
+                author.Text = author.Text.PadRight(9);
+                bw.Write(author.Text.Substring(0, 9));
+                description.Text = description.Text.PadRight(19);
+                bw.Write(description.Text.Substring(0, 19));
+                bw.Write(int.Parse(year.Text));
+                edition.Text = edition.Text.PadRight(5);
+                bw.Write(edition.Text.Substring(0, 5));
+                bw.Write(float.Parse(rate.Text));
+                MessageBox.Show("Saved Successfully");
             }
             catch (Exception exception)
             {

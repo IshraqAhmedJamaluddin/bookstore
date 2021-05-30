@@ -40,39 +40,27 @@ namespace file_organization_project
         private void Search_Load(object sender, EventArgs e)
         {
             this.filename.Text = file;
-            bool isFound = false;
             BinaryReader br = new BinaryReader(File.Open(file, FileMode.Open, FileAccess.Read));
             try
             {
                 int length = (int)br.BaseStream.Length;
-                if (length == 0)
+
+                while (!((count / rec_size) >= (length / rec_size)))
                 {
-                    MessageBox.Show("Empty File");
-                }
-                else
-                {
-                    while (!((count / rec_size) >= (length / rec_size - 1)))
+                    br.BaseStream.Seek(count, SeekOrigin.Begin);
+                    int currentId = br.ReadInt32();
+                    if (currentId == key)
                     {
-                        br.BaseStream.Seek(count, SeekOrigin.Begin);
-                        int currentId = br.ReadInt32();
-                        if (currentId == key)
-                        {
-                            id.Text = currentId.ToString();
-                            name.Text = br.ReadString();
-                            author.Text = br.ReadString();
-                            description.Text = br.ReadString();
-                            year.Text = br.ReadInt32().ToString();
-                            edition.Text = br.ReadString();
-                            rate.Text = br.ReadSingle().ToString();
-                            isFound = true;
-                            break;
-                        }
-                        count += rec_size;
+                        id.Text = currentId.ToString();
+                        name.Text = br.ReadString();
+                        author.Text = br.ReadString();
+                        description.Text = br.ReadString();
+                        year.Text = br.ReadInt32().ToString();
+                        edition.Text = br.ReadString();
+                        rate.Text = br.ReadSingle().ToString();
+                        break;
                     }
-                    if (!isFound)
-                    {
-                        MessageBox.Show("ID not found!");
-                    }
+                    count += rec_size;
                 }
             }
             catch (Exception exception)

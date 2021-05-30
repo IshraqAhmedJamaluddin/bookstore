@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,15 +37,62 @@ namespace file_organization_project
 
         private void get_Click(object sender, EventArgs e)
         {
-            if (change == "modify")
+            try
             {
-                new Modify(file, main, Int32.Parse(id.Text)).Show();
+                int key = Int32.Parse(id.Text);
+                bool isFound = false;
+                int count = 0;
+                int rec_size = 60;
+                BinaryReader br = new BinaryReader(File.Open(file, FileMode.Open, FileAccess.Read));
+                try
+                {
+                    int length = (int)br.BaseStream.Length;
+                    if (length == 0)
+                    {
+                        MessageBox.Show("Empty File");
+                    }
+                    else
+                    {
+                        while (!((count / rec_size) >= (length / rec_size)))
+                        {
+                            br.BaseStream.Seek(count, SeekOrigin.Begin);
+                            int currentId = br.ReadInt32();
+                            if (currentId == key)
+                            {
+                                isFound = true;
+                                break;
+                            }
+                            count += rec_size;
+                        }
+                        
+                        if (!isFound)
+                        {
+                            MessageBox.Show("ID not found!");
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                br.Close();
+                if (isFound)
+                {
+                    if (change == "modify")
+                    {
+                        new Modify(file, main, key).Show();
+                    }
+                    else // search
+                    {
+                        new Search(file, main, key).Show();
+                    }
+                    Close();
+                }
             }
-            else // search
+            catch (Exception exception)
             {
-                new Search(file, main, Int32.Parse(id.Text)).Show();
+                MessageBox.Show(exception.Message);
             }
-            Close();
         }
 
         private void back_Click(object sender, EventArgs e)
